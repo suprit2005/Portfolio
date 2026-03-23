@@ -26,5 +26,10 @@ class Project(models.Model):
         """Returns tech stack as a list."""
         return [t.strip() for t in self.tech_stack.split(',') if t.strip()]
 
+    def get_card_bullets(self):
+        """Returns up to 3 bullet points extracted from the description."""
+        lines = [line.strip().lstrip('-').lstrip('•').lstrip('*').strip() for line in self.description.split('\n') if line.strip()]
+        return lines[:3]
+
     def __str__(self):
         return self.title

@@ -18,48 +18,68 @@
 
             <!-- Left Side: Who I Am -->
             <div class="about-left">
-                <h2 style="font-size: 1.8rem; font-weight: 600; color: var(--text); margin-bottom: 1.5rem;">Who I Am
-                </h2>
-                <div class="about-bio-text">
-                    {% if profile %}
-                    {% if profile.about_bio %}
-                    {{ profile.about_bio|linebreaks }}
-                    {% elif profile.bio %}
-                    {{ profile.bio|linebreaks }}
-                    {% endif %}
-                    {% endif %}
+                <div class="timeline-header">
+                    <h2>Who I Am</h2>
+                </div>
+                
+                <div class="bio-card">
+                    <i class="fa-solid fa-quote-left bio-quote-icon"></i>
+                    <div class="about-bio-text">
+                        {% if profile %}
+                        {% if profile.about_bio %}
+                        {{ profile.about_bio|linebreaks }}
+                        {% elif profile.bio %}
+                        {{ profile.bio|linebreaks }}
+                        {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
             <!-- Right Side: Education -->
             <div class="about-right">
-                <h2 style="font-size: 1.8rem; font-weight: 600; color: var(--text); margin-bottom: 1.5rem;">Education
-                </h2>
-                <div class="education-list">
-                    {% if educations %}
-                    {% for edu in educations %}
-                    <div class="education-card" style="display: flex; flex-direction: column;">
-                        <h3 class="edu-course">{{ edu.course }}</h3>
-                        <div class="edu-institution" style="flex-grow: 1;">{{ edu.institution_name }}</div>
-                        <div class="edu-meta"
-                            style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; color: var(--text-dim); font-size: 0.95rem;">
-                            <span class="edu-duration">
-                                {{ edu.start_date|date:"F Y" }} &ndash;
-                                {% if edu.is_current %}
-                                Present
+                <div class="timeline-header">
+                    <h2>Education</h2>
+                </div>
+                
+                <div class="education-timeline-wrapper">
+                    <div class="education-list timeline">
+                        {% if educations %}
+                        {% for edu in educations %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot">
+                                {% if forloop.counter == 1 %}
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                {% elif forloop.counter == 2 %}
+                                    <i class="fa-solid fa-school"></i>
                                 {% else %}
-                                {{ edu.end_date|date:"F Y" }}
+                                    <i class="fa-solid fa-file-lines"></i>
                                 {% endif %}
-                            </span>
-                            <span class="edu-location">
-                                {{ edu.location }}
-                            </span>
+                            </div>
+                            <div class="education-card" style="display: flex; flex-direction: column;">
+                                <h3 class="edu-course">{{ edu.course }}</h3>
+                                <div class="edu-institution" style="flex-grow: 1;">{{ edu.institution_name }}</div>
+                                <div class="edu-meta"
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; color: var(--text-dim); font-size: 0.95rem;">
+                                    <span class="edu-duration">
+                                        {{ edu.start_date|date:"F Y" }} &ndash;
+                                        {% if edu.is_current %}
+                                        Present
+                                        {% else %}
+                                        {{ edu.end_date|date:"F Y" }}
+                                        {% endif %}
+                                    </span>
+                                    <span class="edu-location">
+                                        {{ edu.location }}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
+                        {% endfor %}
+                        {% else %}
+                        <p style="color:var(--text-muted);">No education details added yet.</p>
+                        {% endif %}
                     </div>
-                    {% endfor %}
-                    {% else %}
-                    <p style="color:var(--text-muted);">No education details added yet.</p>
-                    {% endif %}
                 </div>
             </div>
 
@@ -114,25 +134,31 @@
             </div>
             <div class="grid grid-3">
                 {% for achievement in achievements %}
-                <div class="achievement-card" style="display: flex; flex-direction: column;">
-                    <span class="achievement-category" style="align-self: flex-start;">
-                        {{ achievement.get_category_display }}
-                    </span>
-                    <h3 class="achievement-title">{{ achievement.title }}</h3>
-                    <p class="achievement-desc" style="flex-grow: 1;">{{ achievement.description }}</p>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                        <div class="achievement-date" style="margin-top: 0;">
-                            <i class="fa-regular fa-calendar"></i>
-                            {{ achievement.date|date:"M Y" }}
+                <div class="achievement-card">
+                    {% if achievement.image %}
+                    <div class="achievement-img-wrap">
+                        <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="achievement-img" />
+                    </div>
+                    {% endif %}
+                    <div class="achievement-card-body">
+                        <span class="achievement-category" style="align-self: flex-start; margin-bottom: 0.5rem;">
+                            {{ achievement.get_category_display }}
+                        </span>
+                        <h3 class="achievement-title" style="flex-grow: 1;">{{ achievement.title }}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                            <div class="achievement-date" style="margin-top: 0;">
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ achievement.date|date:"M Y" }}
+                            </div>
+                            {% if achievement.url_link %}
+                            <a href="{{ achievement.url_link }}" target="_blank" rel="noopener"
+                                style="color:var(--text-muted); font-size:1.1rem; transition: color 0.3s ease;"
+                                onmouseover="this.style.color='var(--accent)'"
+                                onmouseout="this.style.color='var(--text-muted)'" title="View Link">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                            {% endif %}
                         </div>
-                        {% if achievement.url_link %}
-                        <a href="{{ achievement.url_link }}" target="_blank" rel="noopener"
-                            style="color:var(--text-muted); font-size:1.1rem; transition: color 0.3s ease;"
-                            onmouseover="this.style.color='var(--accent)'"
-                            onmouseout="this.style.color='var(--text-muted)'" title="View Link">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}

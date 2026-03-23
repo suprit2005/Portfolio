@@ -12,7 +12,8 @@ class Achievement(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='achievements/', blank=True, null=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Other')
     date = models.DateField()
     url_link = models.URLField(blank=True, null=True)

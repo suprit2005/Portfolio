@@ -142,25 +142,26 @@
                             {{ project.title }}
                         </a>
                     </h3>
-                    <p class="project-card-desc">{{ project.summary|truncatechars:110 }}</p>
+                    <ul class="project-card-bullets">
+                        {% for bullet in project.get_card_bullets %}
+                        <li>{{ bullet|truncatechars:100 }}</li>
+                        {% endfor %}
+                    </ul>
 
-                    <!-- Tech Badges -->
-                    <div class="project-card-tags">
+                    <div class="tech-tags">
                         {% for tech in project.get_tech_list %}
-                        <span class="project-card-tag">{{ tech }}</span>
+                        <span class="tech-tag">{{ tech }}</span>
                         {% endfor %}
                     </div>
 
-                    <!-- Footer -->
-                    <div class="project-card-footer">
-                        {% if project.github_link %}
-                        <a href="{{ project.github_link }}" target="_blank" rel="noopener" class="project-card-action">
-                            <i class="fa-brands fa-github"></i> View Code
+                    <div class="project-links">
+                        <a href="{{ project.github_link }}" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">
+                            <i class="fa-brands fa-github"></i> Code
                         </a>
-                        {% elif project.live_demo_link %}
-                        <a href="{{ project.live_demo_link }}" target="_blank" rel="noopener"
-                            class="project-card-action">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Site
+                        {% if project.live_demo_link %}
+                        <a href="{{ project.live_demo_link }}" class="btn btn-outline btn-sm" target="_blank"
+                            rel="noopener">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
                         </a>
                         {% endif %}
                     </div>
@@ -231,25 +232,31 @@
 
         <div class="grid grid-3">
             {% for achievement in achievements %}
-            <div class="achievement-card" style="display: flex; flex-direction: column;">
-                <span class="achievement-category" style="align-self: flex-start;">
-                    {{ achievement.get_category_display }}
-                </span>
-                <h3 class="achievement-title">{{ achievement.title }}</h3>
-                <p class="achievement-desc" style="flex-grow: 1;">{{ achievement.description }}</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                    <div class="achievement-date" style="margin-top: 0;">
-                        <i class="fa-regular fa-calendar"></i>
-                        {{ achievement.date|date:"M Y" }}
+            <div class="achievement-card">
+                {% if achievement.image %}
+                <div class="achievement-img-wrap">
+                    <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="achievement-img" />
+                </div>
+                {% endif %}
+                <div class="achievement-card-body">
+                    <span class="achievement-category" style="align-self: flex-start; margin-bottom: 0.5rem;">
+                        {{ achievement.get_category_display }}
+                    </span>
+                    <h3 class="achievement-title" style="flex-grow: 1;">{{ achievement.title }}</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div class="achievement-date" style="margin-top: 0;">
+                            <i class="fa-regular fa-calendar"></i>
+                            {{ achievement.date|date:"M Y" }}
+                        </div>
+                        {% if achievement.url_link %}
+                        <a href="{{ achievement.url_link }}" target="_blank" rel="noopener"
+                            style="color:var(--text-muted); font-size:1.1rem; transition: color 0.3s ease;"
+                            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'"
+                            title="View Link">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        {% endif %}
                     </div>
-                    {% if achievement.url_link %}
-                    <a href="{{ achievement.url_link }}" target="_blank" rel="noopener"
-                        style="color:var(--text-muted); font-size:1.1rem; transition: color 0.3s ease;"
-                        onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'"
-                        title="View Link">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                    {% endif %}
                 </div>
             </div>
             {% endfor %}

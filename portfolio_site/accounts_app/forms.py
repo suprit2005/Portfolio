@@ -47,9 +47,8 @@ class SkillForm(forms.ModelForm):
 class AchievementForm(forms.ModelForm):
     class Meta:
         model = Achievement
-        fields = ['title', 'description', 'category', 'date', 'url_link']
+        fields = ['title', 'image', 'category', 'date', 'url_link']
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 4}),
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
 
