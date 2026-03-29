@@ -498,7 +498,6 @@ img {
 }
 
 .project-card-img-wrap {
-  flex-shrink: 0;
   position: relative;
   width: 100%;
   background: var(--surface-2);
@@ -1172,7 +1171,6 @@ img {
 }
 
 .achievement-img-wrap {
-  flex-shrink: 0;
   position: relative;
   width: 100%;
   background: var(--surface-2);
@@ -1996,11 +1994,28 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 768px) {
-  .section { padding: 60px 0; }
-  .contact-form-card, .bio-card { padding: 1.5rem; }
-  .education-list.timeline { padding-left: 3rem; }
-  .timeline-dot { left: -3rem; }
-  .profile-img, .profile-img-placeholder { width: 180px; height: 180px; }
+  .section {
+    padding: 60px 0;
+  }
+
+  .contact-form-card,
+  .bio-card {
+    padding: 1.5rem;
+  }
+
+  .education-list.timeline {
+    padding-left: 3rem;
+  }
+
+  .timeline-dot {
+    left: -3rem;
+  }
+
+  .profile-img,
+  .profile-img-placeholder {
+    width: 180px;
+    height: 180px;
+  }
 
   .hero-flex {
     flex-direction: column;
