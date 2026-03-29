@@ -75,6 +75,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -84,6 +85,7 @@ body {
   line-height: 1.6;
   transition: background var(--transition), color var(--transition);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1,
@@ -1072,6 +1074,7 @@ img {
 .project-links {
   display: flex;
   gap: 0.65rem;
+  flex-wrap: wrap;
 }
 
 .featured-star {
@@ -1991,8 +1994,15 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 768px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
+  .section { padding: 60px 0; }
+  .contact-form-card, .bio-card { padding: 1.5rem; }
+  .education-list.timeline { padding-left: 3rem; }
+  .timeline-dot { left: -3rem; }
+  .profile-img, .profile-img-placeholder { width: 180px; height: 180px; }
+
+  .hero-flex {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     gap: 2.5rem;
   }
@@ -2068,6 +2078,10 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 480px) {
+  .nav-brand {
+    font-size: 1rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
