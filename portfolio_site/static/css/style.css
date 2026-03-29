@@ -498,6 +498,7 @@ img {
 }
 
 .project-card-img-wrap {
+  flex-shrink: 0;
   position: relative;
   width: 100%;
   background: var(--surface-2);
@@ -1171,6 +1172,7 @@ img {
 }
 
 .achievement-img-wrap {
+  flex-shrink: 0;
   position: relative;
   width: 100%;
   background: var(--surface-2);
